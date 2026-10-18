@@ -1,3 +1,5 @@
+Re-adding the hook to change bot names with a text file in hmw-mod/bots.txt for private matches.  I own none of this code and mainly for my own educational use. The eventual build should not be used for regular multiplayer matches, only private matches.
+
 ![license](https://img.shields.io/github/license/auroramod/h1-mod.svg)
 [![open bugs](https://img.shields.io/github/issues/HorizonMW/HorizonMW-Client/bug?label=bugs)](https://github.com/HorizonMW/HorizonMW-Client/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 [![Build](https://github.com/auroramod/h1-mod/workflows/Build/badge.svg)](https://github.com/auroramod/h1-mod/actions)
