@@ -1,0 +1,49 @@
+
+name: Build Modern Warfantasy Client
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout source and dependencies
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Configure MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Generate Visual Studio solution
+        shell: cmd
+        run: generate.bat
+
+      - name: Build HorizonMW
+        shell: pwsh
+        run: |
+          $solution = Get-ChildItem build -Filter *.sln |
+            Select-Object -First 1
+
+          if (-not $solution) {
+            throw "Visual Studio solution not generated"
+          }
+
+          msbuild $solution.FullName /m /p:Configuration=Release /p:Platform=x64 /verbosity:minimal
+
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Upload compiled executables
+        uses: actions/upload-artifact@v4
+        with:
+          name: Modern-Warfantasy-Client
+          path: build/bin/x64/Release/
+          if-no-files-found: error
